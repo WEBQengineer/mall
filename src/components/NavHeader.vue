@@ -132,13 +132,14 @@ export default {
   @import 'scss/base.scss';
   @import 'scss/mixin.scss';
   @import 'scss/config.scss';
+  //opcity是可以有过渡效果的，height不行
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-    // transition: height 2s;
+    // transition: opacity .5s;
+    transition: height 2s;
   }
   .fade-enter, .fade-leave-to {
-    opacity: 0;
-    // height: 0px;
+    // opacity: 0;
+    height: 0px;
   }
   .header{
     .nav-topbar{
