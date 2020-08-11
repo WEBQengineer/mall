@@ -9,10 +9,14 @@
           <a href="javascript:;">协议规则</a>
         </div>
         <div class="topbar-user">
-          <a href="javascript:;">登陆</a>
-          <a href="javascript:;">注册</a>
-          <a href="javascript:;" class="my-cart">
-            <span class="icon-cart">
+          <a href="javascript:;" v-if="username">{{username}}</a>
+          <a href="javascript:;" v-if="!username" @click="login">登陆</a>
+          <a href="javascript:;" v-if="username">我的订单</a>
+          <a href="javascript:;"
+            class="my-cart"
+            @click="goToCart"
+          >
+            <span class="icon-cart" @click="goToCart">
               <span class="iconfont">&#xe600;</span>
               购物车
             </span>
@@ -26,88 +30,37 @@
           <a href="/#/index" ></a>
         </div>
         <div class="header-menu">
-          <div class="item-menu">
+          <div class="item-menu"
+            key="world"
+            @mouseenter="onMenu"
+            @mouseleave="leaveMenu"
+          >
             <span>小米手机</span>
-            <div class="children">
-              <ul>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
+            <transition  name="fade">
+              <div class="children" key="hello" v-if="childrenShow">
+                <ul>
+                  <li
+                    class="product"
+                    v-for="(item) of phoneList"
+                    :key="item.id"
                   >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                    </div>
-                    <div class="pro-name">小米cc9</div>
-                    <div class="pro-price">1799</div>
-                  </a>
-                </li>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
-                  >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/df9b3e7a562e02a33eb069b3f0119815.png" alt="">
-                    </div>
-                    <div class="pro-name">小米CC9e</div>
-                    <div class="pro-price">1299</div>
-                  </a>
-                </li>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
-                  >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/df9b3e7a562e02a33eb069b3f0119815.png" alt="">
-                    </div>
-                    <div class="pro-name">小米CC9e</div>
-                    <div class="pro-price">1299</div>
-                  </a>
-                </li>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
-                  >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/df9b3e7a562e02a33eb069b3f0119815.png" alt="">
-                    </div>
-                    <div class="pro-name">小米CC9e</div>
-                    <div class="pro-price">1299</div>
-                  </a>
-                </li>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
-                  >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/df9b3e7a562e02a33eb069b3f0119815.png" alt="">
-                    </div>
-                    <div class="pro-name">小米CC9e</div>
-                    <div class="pro-price">1299</div>
-                  </a>
-                </li>
-                <li class="product">
-                  <a href=""
-                    target="_blank"
-                  >
-                    <div class="pro-img">
-                      <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/df9b3e7a562e02a33eb069b3f0119815.png" alt="">
-                    </div>
-                    <div class="pro-name">小米CC9e</div>
-                    <div class="pro-price">1299</div>
-                  </a>
-                </li>
-              </ul>
-            </div>
+                    <a :href="'/#/product/'+item.id" target="_blank">
+                      <div class="pro-img">
+                        <img :src="item.mainImage" alt="">
+                      </div>
+                      <div class="pro-name">{{item.name}}</div>
+                      <div class="pro-price">{{item.price | currency}}</div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </transition>
           </div>
           <div class="item-menu">
             <span>Redmi红米</span>
-            <div class="children">
-              
-            </div>
           </div>
           <div class="item-menu">
             <span>电视</span>
-            <div class="children"></div>
           </div>
         </div>
         <div class="header-search">
@@ -125,14 +78,68 @@
 
 <script>
 export default {
-  name: 'nav-header'
+  name: 'nav-header',
+  data () {
+    return {
+      childrenShow: false,
+      username: 'jack',
+      phoneList: []
+    }
+  },
+  mounted () {
+    this.getProductList()
+  },
+  filters: {
+    currency(val){
+      if (!val) {
+        return '¥0.00'
+      }
+      return '¥' + val.toFixed(2)
+    }
+  },
+  methods: {
+    getProductList () {
+      this.axios.get('/products',{
+        params:{
+          categoryId: 100012
+        }
+      }).then((res) => {
+        console.log(res.list)
+        if (res.list.length>6) {
+          this.phoneList = res.list.slice(0,6)
+        }
+      })
+    },
+    goToCart(){
+      this.$router.push('/cart')
+    },
+    login(){
+      this.$router.push('/login')
+    },
+    onMenu () {
+      console.log('enter')
+      this.childrenShow = true
+    },
+    leaveMenu () {
+      console.log('leave')
+      this.childrenShow = false
+    }
+  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import 'scss/base.scss';
   @import 'scss/mixin.scss';
   @import 'scss/config.scss';
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+    // transition: height 2s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+    // height: 0px;
+  }
   .header{
     .nav-topbar{
       height: 39px;
@@ -204,23 +211,16 @@ export default {
             }
             &:hover{
               color: $colorA;
-              .children{
-                height: 220px;
-                opacity: 1;
-                transition: height .5s;
-              }
             }
             .children{
-              height: 0;
-              opacity: 0;
               position: absolute;
               overflow: hidden;
               width: 1226px;
+              height: 220px;
               left: 0;
               top: 112px;
               border-top: 1px solid $colorH;
               box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-              transition: all .5s;
               .product{
                 width: 16.6%;
                 height: 220px;
