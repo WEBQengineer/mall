@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="homePage">
     <nav-header></nav-header>
     <router-view></router-view>
-    <nav-footer></nav-footer>
+    <div class="zw">占位1000px</div>
+    <nav-footer class="navFooter"></nav-footer>
   </div>
 </template>
 
@@ -20,3 +21,12 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .homePage{
+    .zw{
+      height: 1px;
+    };
+  }
+  
+</style>

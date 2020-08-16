@@ -4,9 +4,18 @@
       <div class="container">
         <div class="topbar-menu">
           <a href="javascript:;">小米商城</a>
+          <a href="javascript:;">ioT</a>
           <a href="javascript:;">MUI</a>
           <a href="javascript:;">云服务</a>
+          <a href="javascript:;">金融</a>
+          <a href="javascript:;">有品</a>
+          <a href="javascript:;">小爱开放平台</a>
+          <a href="javascript:;">企业团购</a>
+          <a href="javascript:;">资质证照</a>
           <a href="javascript:;">协议规则</a>
+          <a href="javascript:;">下载app</a>
+          <a href="javascript:;">智能生活</a>
+          <a href="javascript:;">Select Location</a>
         </div>
         <div class="topbar-user">
           <a href="javascript:;" v-if="username">{{username}}</a>
@@ -28,6 +37,9 @@
       <div class="container">
         <div class="header-logo">
           <a href="/#/index" ></a>
+        </div>
+        <div class="actImg">
+          <img src="/imgs/mithank.gif" alt="">
         </div>
         <div class="header-menu">
           <div class="item-menu"
@@ -62,10 +74,28 @@
           <div class="item-menu">
             <span>电视</span>
           </div>
+          <div class="item-menu">
+            <span>笔记本</span>
+          </div>
+          <div class="item-menu">
+            <span>家电</span>
+          </div>
+          <div class="item-menu">
+            <span>路由器</span>
+          </div>
+          <div class="item-menu">
+            <span>智能硬件</span>
+          </div>
+          <div class="item-menu">
+            <span>服务</span>
+          </div>
+          <div class="item-menu">
+            <span>社区</span>
+          </div>
         </div>
         <div class="header-search">
           <div class="wrapper">
-            <input type="text" class="searchInput" />
+            <input type="text" class="searchInput" placeholder="米家插线板 快充版 27W" />
             <div class="searchIcon">
               <span class="iconfont">&#xe632;</span>
             </div>
@@ -134,12 +164,12 @@ export default {
   @import 'scss/config.scss';
   //opcity是可以有过渡效果的，height不行
   .fade-enter-active, .fade-leave-active {
-    // transition: opacity .5s;
-    transition: height 2s;
+    transition: opacity .5s;
+    // transition: height 2s;
   }
   .fade-enter, .fade-leave-to {
-    // opacity: 0;
-    height: 0px;
+    opacity: 0;
+    // height: 0px;
   }
   .header{
     .nav-topbar{
@@ -151,14 +181,19 @@ export default {
         @include flex();
         a {
           display: inline-block;
-          color: #ffffff;
+          color: #b0b0b0;
           margin-right: 17px;
+          font-size: 12px;
         }
         .my-cart{
           width:110px;
           height: 39px;
           background: #ff6600;
           text-align: center;
+        }
+        height: 39px;
+        .topbar-user, .topbar-menu{
+          height: 39px;
         }
       }
     }
@@ -198,10 +233,15 @@ export default {
             }
           }
         }
+        .actImg{
+          display: inline-block;
+          height: 55px;
+          margin: 0 20px;
+        }
         .header-menu{
           display: inline-block;
           width: 700px;
-          padding-left: 209px;
+          // padding-left: 209px;
           .item-menu{
             display: inline-block;
             margin-right: 20px;
@@ -215,6 +255,7 @@ export default {
             }
             .children{
               position: absolute;
+              background: #ffffff;
               overflow: hidden;
               width: 1226px;
               height: 220px;

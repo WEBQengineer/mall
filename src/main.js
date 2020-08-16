@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'scss/reset.scss'
 import 'styles/iconfont.css'
+import 'swiper/css/swiper.css'
 import env from './env'
 
 
