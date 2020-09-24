@@ -20,6 +20,7 @@
         <div class="topbar-user">
           <a href="javascript:;" v-if="username">{{username}}</a>
           <a href="javascript:;" v-if="!username" @click="login">登陆</a>
+          <a href="javascript:;" v-if="username" @click="logout">退出</a>
           <a href="javascript:;" v-if="username">我的订单</a>
           <a href="javascript:;"
             class="my-cart"
@@ -27,7 +28,7 @@
           >
             <span class="icon-cart" @click="goToCart">
               <span class="iconfont">&#xe600;</span>
-              购物车
+              购物车({{cartCount}})
             </span>
           </a>
         </div>
@@ -36,7 +37,7 @@
     <div class="nav-header">
       <div class="container">
         <div class="header-logo">
-          <a href="/#/index" ></a>
+          <a href="/#/index"></a>
         </div>
         <div class="actImg">
           <img src="/imgs/mithank.gif" alt="">
@@ -49,7 +50,7 @@
           >
             <span>小米手机</span>
             <transition  name="fade">
-              <div class="children" key="hello" v-if="childrenShow">
+              <div class="children" key="hello" v-show="childrenShow">
                 <ul>
                   <li
                     class="product"
@@ -107,17 +108,37 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   name: 'nav-header',
   data () {
     return {
       childrenShow: false,
-      username: 'jack',
       phoneList: []
     }
   },
-  mounted () {
-    this.getProductList()
+  computed: {
+    /*username() {
+      return this.$store.state.username
+    },
+    cartCount() {
+      return this.$store.state.cartCount
+    }*/
+    ...mapState(['username','cartCount'])
+  },
+  // mounted() {
+  //   let params = this.$route.params;
+  //   this.getProductList();
+  //   if (params && params.from == 'login') {
+  //     this.getCartCount();
+  //   }
+  // },
+  activated(){
+    this.getProductList();
+    let params = this.$route.params;
+    if(params && params.from == 'login'){
+      this.getCartCount();
+    }
   },
   filters: {
     currency(val){
@@ -147,13 +168,25 @@ export default {
       this.$router.push('/login')
     },
     onMenu () {
-      console.log('enter')
       this.childrenShow = true
     },
     leaveMenu () {
-      console.log('leave')
       this.childrenShow = false
-    }
+    },
+    getCartCount(){
+        this.axios.get('/carts/products/sum').then((res=0)=>{
+          this.$store.dispatch('saveCartCount',res);
+        })
+      },
+    logout(){
+      this.axios.post('/user/logout').then(()=>{
+        this.$message.success('退出成功');
+        this.$cookie.set('userId','',{expires:'-1'});
+        this.saveUserName('');
+        this.saveCartCount('0')
+      })
+    },
+    ...mapActions(['saveUserName', 'saveCartCount'])
   }
 }
 </script>
@@ -162,15 +195,7 @@ export default {
   @import 'scss/base.scss';
   @import 'scss/mixin.scss';
   @import 'scss/config.scss';
-  //opcity是可以有过渡效果的，height不行
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-    // transition: height 2s;
-  }
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
-    // height: 0px;
-  }
+  
   .header{
     .nav-topbar{
       height: 39px;
@@ -194,6 +219,10 @@ export default {
         height: 39px;
         .topbar-user, .topbar-menu{
           height: 39px;
+          .my-cart{
+            margin-right: 0;
+            color: $colorG;
+          }
         }
       }
     }
@@ -202,37 +231,6 @@ export default {
         height: 112px;
         @include flex();
         position: relative;
-        .header-logo{
-          display: inline-block;
-          width: 55px;
-          height: 55px;
-          background: #ff6600;
-          a{
-            display: inline-block;
-            width: 110px;
-            height: 55px;
-            &:before{
-              content: '';
-              display: inline-block;
-              width: 55px;
-              height: 55px;
-              background: url('/imgs/mi-logo.png') no-repeat center;
-              background-size: 55px;
-            }
-            &:after{
-              content: '';
-              display: inline-block;
-              width: 55px;
-              height: 55px;
-              background: url('/imgs/mi-home.png') no-repeat center;
-              background-size: 55px;
-            }
-            &:hover:before, &:hover:before{
-              margin-left: -55px;
-              transition: margin .2s;
-            }
-          }
-        }
         .actImg{
           display: inline-block;
           height: 55px;
@@ -263,6 +261,16 @@ export default {
               top: 112px;
               border-top: 1px solid $colorH;
               box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+              z-index: 12;
+              //opcity是可以有过渡效果的，height不行
+              &.fade-enter-active, &.fade-leave-active {
+                // transition: opacity .5s;
+                transition: all .6s;
+              }
+              &.fade-enter, &.fade-leave-to {
+                opacity: 0;
+                height: 0px;
+              }
               .product{
                 width: 16.6%;
                 height: 220px;

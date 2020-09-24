@@ -7,6 +7,7 @@
 </template>
 
 <script>
+// import { mapActions } from 'vuex';
 export default {
   name: 'App',
   components: {
@@ -16,19 +17,27 @@ export default {
       res: {}
     }
   },
+  methods: {
+    getUser () {
+      this.axios.get('/user').then((res={})=>{
+        this.$store.dispatch('saveUserName',res.username);
+      })
+    },
+    getCartCount () {
+      this.axios.get('/carts/products/sum').then((res=0)=>{
+        this.$store.dispatch('saveCartCount',res);
+      })
+    },
+    // ...mapActions(['saveUserName','saveCartCount'])
+  },
   mounted () {
-    // 本地mock
-    // this.axios.get('/mock/user/login.json').then((res)=>{
-    //   this.res = res
-    // })
-
-    this.axios.get('/user/login').then((res)=>{
-      this.res = res
-    })
+    if (this.$cookie.get('userId')) {
+      this.getUser()
+      this.getCartCount()
+    }
   }
 }
 </script>
 
-<style>
-
+<style lang='scss'>
 </style>
