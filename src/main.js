@@ -16,7 +16,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import env from './env'
 
 
-axios.defaults.baseURL = env.baseURL;
+// axios.defaults.baseURL = env.baseURL;
+axios.defaults.baseURL = 'api';
 axios.defaults.timeout = 8000;
 console.log('基本路径：',env.baseURL)
 

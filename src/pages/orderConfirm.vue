@@ -250,6 +250,7 @@ export default{
       let params = checkedItem;
       this.axios[method](url,params).then(()=>{
         this.$message.success('操作成功')
+        //判断如果最后一个被删掉了，默认第一个为选中状态
         if (this.nowChecked==this.addList.length-1 && userAction == 2) {
           this.nowChecked=0
         }
@@ -266,11 +267,15 @@ export default{
     
     // 订单提交
     orderSubmit(){
-      this.$router.push({
-        path:'/order/pay',
-        query:{
-          orderNo:123
-        }
+      this.axios.post('/orders',{
+        shippingId:this.addList[this.nowChecked].id
+      }).then((res)=>{
+        this.$router.push({
+          path:'/order/pay',
+          query:{
+            orderNo:res.orderNo
+          }
+        })
       })
     },
     //给当前选中的地址加边框
