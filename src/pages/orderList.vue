@@ -59,7 +59,7 @@
   import OrderHeader from 'components/OrderHeader';
   import Loading from 'components/Loading';
   import NoDate from 'components/NoDate';
-  import { Pagination } from 'element-ui';
+  import { Pagination, Button } from 'element-ui';
   export default{
     name:'order-list',
     data(){
@@ -75,7 +75,8 @@
       OrderHeader,
       Loading,
       NoDate,
-      [Pagination.name]:Pagination
+      [Pagination.name]:Pagination,
+      [Button.name]:Button
     },
     mounted () {
       this.getOrderList()
