@@ -70,7 +70,7 @@ export default{
   data(){
     return {
       swiperOption:{
-        autoplay:true,
+        // autoplay:true,
         pagination: {
           el: '.swiper-pagination',
           clickable :true,
@@ -129,8 +129,8 @@ export default{
         height:617px;
         margin-top:5px;
         img{
-          width:384px;
-          height:486px;
+          width:100%;
+          height:100%;
         }
       }
       .content{

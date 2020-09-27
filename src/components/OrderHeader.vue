@@ -7,6 +7,7 @@
       <div class="orderTitle fl">
         <h2>
           {{orderTitle}}
+          <!-- 下面一行要用span -->
           <slot name="tip"></slot>
         </h2>
       </div>

@@ -73,5 +73,8 @@ export default new Router({
       ]
     },
     { path: '*', component: NotFound }
-  ]
+  ],
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }
 })
