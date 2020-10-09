@@ -40,4 +40,8 @@ export default {
 </script>
 
 <style lang='scss'>
+  @import 'scss/base.scss';
+  @import 'scss/mixin.scss';
+  @import 'scss/config.scss';
+  @import 'scss/button.scss';
 </style>

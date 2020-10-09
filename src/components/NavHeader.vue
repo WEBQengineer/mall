@@ -4,7 +4,7 @@
       <div class="container">
         <div class="topbar-menu">
           <a href="javascript:;">小米商城</a>
-          <a href="javascript:;">ioT</a>
+          <a href="javascript:;" @click="localsto">ioT</a>
           <a href="javascript:;">MUI</a>
           <a href="javascript:;">云服务</a>
           <a href="javascript:;">金融</a>
@@ -133,6 +133,9 @@ export default {
   //     this.getCartCount();
   //   }
   // },
+
+  //因为使用了keep-alive 所以mounted失效，只能用mounted
+  //另一种解决方案<keep-alive exclude="Detail">
   activated(){
     this.getProductList();
     let params = this.$route.params;
@@ -149,6 +152,11 @@ export default {
     }
   },
   methods: {
+    //测试用--点击添加localStorage
+    localsto(){
+      localStorage['city123'] = 'city456'
+      // window.sessionStorage.setItem('kakaka','hahaha')
+    },
     getProductList () {
       this.axios.get('/products',{
         params:{
@@ -191,7 +199,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import 'scss/base.scss';
   @import 'scss/mixin.scss';
   @import 'scss/config.scss';

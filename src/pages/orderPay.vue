@@ -75,6 +75,15 @@ export default{
     OrderHeader
     // ScanPayCode
   },
+  beforeRouteLeave (to, from, next) {
+    if (from.path == '/order/pay' && to.path == '/order/confirm') {
+      // next(false)
+      // this.$router.push('/')
+      next({ path: '/', replace: true })
+    } else {
+      next()
+    }
+  },
   mounted(){
     this.getOrderDetail()
   },

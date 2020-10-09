@@ -7,7 +7,7 @@ import NotFound from 'pages/notFound'
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes:[
     {
       path:'/',
@@ -70,3 +70,14 @@ export default new Router({
     return { x: 0, y: 0 }
   }
 })
+
+//如果是结算页到支付页，不允许回到支付页
+// router.beforeEach((to, from, next) => {
+//   if (from.path == '/order/pay' && to.path == '/order/confirm') {
+//     next(false)
+//   } else {
+//     next()
+//   }
+// })
+
+export default router;
