@@ -83,7 +83,7 @@ export default{
       payMethodWeChat:false,
       isConfirmed:false,
       dialogVisible:false,
-      closeDialog: 5,
+      closeDialog: 1,//规定该参数为0时关闭dialog弹窗，默认设置为一，也可以自定义设置其它数值
       timer: null
     }
   },
@@ -94,7 +94,8 @@ export default{
   },
   //禁止返回结算页
   beforeRouteLeave (to, from, next) {
-    if (from.path == '/order/pay' && to.path == '/order/confirm') {
+    // from.path == '/order/pay' && 
+    if (to.path == '/order/confirm') {
       this.dialogVisible = true;
       this.timer = setInterval(() => {
         if (this.closeDialog == 0) {
@@ -106,11 +107,6 @@ export default{
     } else {
       next()
     }
-    // if (from.path == '/order/pay' && to.path == '/order/confirm') {
-    //   next({ path: '/', replace: true })
-    // } else {
-    //   next()
-    // }
   },
   mounted(){
     this.getOrderDetail();
@@ -122,8 +118,8 @@ export default{
     handleClose(){},
     dialogOk(){
       this.closeDialog = 0
-      console.log('this.closeDialog',this.closeDialog)
-      setTimeout(this.clearTimeoutOk,1000)
+      // setTimeout(this.clearTimeoutOk,1000)
+      setTimeout(()=>{clearTimeout(this.timer)},1000)
     },
     payTypeAli(){
       if (this.payMethodAli == true) {

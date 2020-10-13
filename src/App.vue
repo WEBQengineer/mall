@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import localeP from './strorage';
+// import localeP from './strorage';
 // import { mapActions } from 'vuex';
 export default {
   name: 'App',
@@ -32,7 +32,7 @@ export default {
     // ...mapActions(['saveUserName','saveCartCount'])
   },
   mounted () {
-    localeP.newPromise();
+    // localeP.newPromise();
     if (this.$cookie.get('userId')) {
       this.getUser()
       this.getCartCount()
