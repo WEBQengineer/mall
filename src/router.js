@@ -13,7 +13,7 @@ const router = new Router({
       path:'/',
       name:'home',
       component:Home,
-      redirect:'/index',
+      redirect:'/index',// { path: '/a', redirect: { name: 'foo' }}
       children:[
         {
           path: 'index',
@@ -70,14 +70,5 @@ const router = new Router({
     return { x: 0, y: 0 }
   }
 })
-
-//如果是结算页到支付页，不允许回到支付页
-// router.beforeEach((to, from, next) => {
-//   if (from.path == '/order/pay' && to.path == '/order/confirm') {
-//     next(false)
-//   } else {
-//     next()
-//   }
-// })
 
 export default router;

@@ -52,11 +52,23 @@
       </div>
     </div>
     <scan-pay-code v-if="showPay"></scan-pay-code>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <span>您还未支付，确认返回吗？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogOk">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 <script>
-import OrderHeader from 'components/OrderHeader'
-// import ScanPayCode from 'components/ScanPayCode'
+import OrderHeader from 'components/OrderHeader';
+import { Dialog, Button } from 'element-ui';
 export default{
   name:'order-pay',
   data(){
@@ -68,26 +80,51 @@ export default{
       orderItemVoList:[], //订单信息
       payment: 0,
       payMethodAli:true,
-      payMethodWeChat:false
+      payMethodWeChat:false,
+      isConfirmed:false,
+      dialogVisible:false,
+      closeDialog: 5,
+      timer: null
     }
   },
   components:{
-    OrderHeader
-    // ScanPayCode
+    OrderHeader,
+    [Button.name]:Button,
+    [Dialog.name]:Dialog
   },
+  //禁止返回结算页
   beforeRouteLeave (to, from, next) {
     if (from.path == '/order/pay' && to.path == '/order/confirm') {
-      // next(false)
-      // this.$router.push('/')
-      next({ path: '/', replace: true })
+      this.dialogVisible = true;
+      this.timer = setInterval(() => {
+        if (this.closeDialog == 0) {
+          this.dialogVisible = false;
+          next({ path: '/', replace: true })
+          console.log('beforeRouteLeave执行！')
+        }
+      }, 100);
     } else {
       next()
     }
+    // if (from.path == '/order/pay' && to.path == '/order/confirm') {
+    //   next({ path: '/', replace: true })
+    // } else {
+    //   next()
+    // }
   },
   mounted(){
-    this.getOrderDetail()
+    this.getOrderDetail();
   },
   methods:{
+    clearTimeoutOk(){
+      clearTimeout(this.timer)
+    },
+    handleClose(){},
+    dialogOk(){
+      this.closeDialog = 0
+      console.log('this.closeDialog',this.closeDialog)
+      setTimeout(this.clearTimeoutOk,1000)
+    },
     payTypeAli(){
       if (this.payMethodAli == true) {
         return

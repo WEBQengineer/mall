@@ -137,6 +137,7 @@ export default {
   //因为使用了keep-alive 所以mounted失效，只能用mounted
   //另一种解决方案<keep-alive exclude="Detail">
   activated(){
+    console.log('this.$route',this.$route.name)
     this.getProductList();
     let params = this.$route.params;
     if(params && params.from == 'login'){

@@ -1,4 +1,7 @@
 <template>
+  <!-- path: 'register', query: { plan: 'private' } -->
+  <!-- <router-link :to="{ name: 'product', params: { id: 123 }}"> -->
+  <!-- <router-link :to="{ path: 'product', query: { id: 123 }}"> -->
   <router-link to="/">
     <div  class="container">
       <!-- <img class="container" :src="`404.jpeg`"> -->

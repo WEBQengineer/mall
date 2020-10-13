@@ -3,6 +3,32 @@
  */
 const  STORAGE_KEY = 'mall';
 export default{
+  newPromise(){
+
+    return new Promise(function (resolve) {
+      let panDuan = false;
+      setTimeout(() => {
+        console.log('settimeout执行！')
+        panDuan = true;
+      }, 10000);
+        // 一些比较耗时异步操作
+      if(panDuan) {
+        resolve();
+      } else {
+        console.log('newPromise',panDuan)
+      }
+    });
+
+    // Promise.reject('出错了');
+
+
+    // const p = new Promise((resolve, reject) => reject('出错了'))
+    // p.then(null, function (s) {
+    //   console.log(s)
+    // });
+  },
+
+  
   // 存储值
   setItem(key,value,module_name){
     if (module_name){

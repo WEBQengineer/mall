@@ -13,9 +13,7 @@
           </a>
         </div>
         <div class="modal-body">
-          <slot name="body">
-
-          </slot>
+          <slot name="body"></slot>
         </div>
         <div class="modal-footer">
           <a href="javascript:;" class="btn" v-if="btnType==1" @click="$emit('submit')">{{sureText}}</a>

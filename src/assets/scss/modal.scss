@@ -1,7 +1,7 @@
 .modal{
   @include position(fixed);
   z-index: 12;
-  transition: top .5s;
+  transition: all .5s;
   .mask{
     @include position(fixed);
     background: $colorI;
@@ -21,8 +21,6 @@
     background: $colorG;
     transform: translate(-50%, -50%);
     .modal-header{
-      // box-sizing: border-box;
-      // width: 660px;
       height: 60px;
       line-height: 60px;
       background: $colorJ;
@@ -41,9 +39,6 @@
       font-size: $fontJ;
     }
     .modal-footer{
-      // box-sizing: border-box;
-      // width: 660px;
-      // padding: 0 25px;
       height: 82px;
       line-height: 82px;
       background: $colorJ;

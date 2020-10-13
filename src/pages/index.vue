@@ -69,9 +69,6 @@
         <div class="list-box">
           <div class="list" v-for="(item, index) of phoneList" :key="index">
             <div class="item" v-for="item of item" :key="item.id">
-              <!-- <span
-                :class="[`stateLabelNew${item.price}`]"
-              > -->
               <span
                 :class="{stateLabelNew:item.price>2400,stateLabelHot:item.price<2400&&item.price>1000,stateLabelNow:item.price<1000}"
               >
@@ -87,8 +84,9 @@
               <div class="item-info">
                 <h3>{{item.name}}</h3>
                 <p>{{item.subtitle}}</p>
-                <p class="goods-money">{{item.price}}
-                  <a class="iconfont" @click="addCart(item.id)">&#xe602;</a>
+                <p class="goods-money" @click="addCart(item.id)">
+                  {{item.price}}
+                  <a class="iconfont" >&#xe602;</a>
                 </p>
               </div>
             </div>
@@ -257,6 +255,7 @@ export default {
     },
     goToCart () {
       this.$router.push('/cart')
+      this.showModal = false
     }
   }
 }
