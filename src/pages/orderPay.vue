@@ -84,7 +84,7 @@ export default{
       isConfirmed:false,
       dialogVisible:false,
       closeDialog: 1,//规定该参数为0时关闭dialog弹窗，默认设置为一，也可以自定义设置其它数值
-      timer: null
+      timer: null  //监听对话框的setInterval
     }
   },
   components:{
@@ -96,10 +96,12 @@ export default{
   beforeRouteLeave (to, from, next) {
     // from.path == '/order/pay' && 
     if (to.path == '/order/confirm') {
-      this.dialogVisible = true;
+      this.dialogVisible = true;//打开对话框
+      let count = 0;
       this.timer = setInterval(() => {
-        if (this.closeDialog == 0) {
-          this.dialogVisible = false;
+        if (this.closeDialog == 0 && count == 0) {
+          ++count;//限制只执行一次
+          this.dialogVisible = false;//关闭对话框
           next({ path: '/', replace: true })
           console.log('beforeRouteLeave执行！')
         }

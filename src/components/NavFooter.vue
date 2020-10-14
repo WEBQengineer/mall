@@ -22,7 +22,6 @@ export default {
 <style lang="scss" scoped>
   @import 'scss/config.scss';
   .container{
-    // height: 233.8px;
     height: 185.8px;
     width: 100%;
     background: #333333;
