@@ -22,7 +22,8 @@ export default {
     }
   },
   mounted(){
-    this.getPath()
+    this.getPath();
+ 
   },
   methods:{
     getPath(){

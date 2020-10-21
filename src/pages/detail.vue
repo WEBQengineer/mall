@@ -4,7 +4,7 @@
     <div class="wrapper">
       <div class="container clearfix">
         <div class="swiper">
-          <swiper :options="swiperOption">
+          <swiper :options="swiperOptions">
             <swiper-slide><img src="/imgs/detail/phone-1.jpg" alt=""></swiper-slide>
             <swiper-slide><img src="/imgs/detail/phone-2.jpg" alt=""></swiper-slide>
             <swiper-slide><img src="/imgs/detail/phone-3.jpg" alt=""></swiper-slide>
@@ -69,7 +69,7 @@ export default{
   name:'detail',
   data(){
     return {
-      swiperOption:{
+      swiperOptions:{
         // autoplay:true,
         pagination: {
           el: '.swiper-pagination',
@@ -79,7 +79,7 @@ export default{
       radioItems:['6GB+64GB 全网通','4GB+64GB 移动4G','8GB+128GB','8GB+256GB'],
       checkedSpe: '',
       product:{},
-      productId: this.$route.params.id
+      productId: this.$route.params.id,
     }
   },
   components:{
@@ -112,8 +112,8 @@ export default{
   },
   mounted(){
     //设置总计的规格默认值 为第一个
-    this.checkedSpe = this.radioItems[0],
-    this.getProductInfo()
+    this.checkedSpe = this.radioItems[0];
+    this.getProductInfo();
   }
 }
 </script>

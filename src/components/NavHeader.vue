@@ -3,19 +3,18 @@
     <div class="nav-topbar">
       <div class="container">
         <div class="topbar-menu">
-          <a href="javascript:;">小米商城</a>
-          <a href="javascript:;" @click="localsto">ioT</a>
-          <a href="javascript:;">MUI</a>
-          <a href="javascript:;">云服务</a>
-          <a href="javascript:;">金融</a>
-          <a href="javascript:;">有品</a>
-          <a href="javascript:;">小爱开放平台</a>
-          <a href="javascript:;">企业团购</a>
-          <a href="javascript:;">资质证照</a>
-          <a href="javascript:;">协议规则</a>
-          <a href="javascript:;">下载app</a>
-          <a href="javascript:;">智能生活</a>
-          <a href="javascript:;">Select Location</a>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">小米商城</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">MUI</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">云服务</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">金融</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">有品</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">小爱开放平台</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">企业团购</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">资质证照</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">协议规则</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">下载app</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">智能生活</router-link>
+          <router-link :to="{ name: 'product', params: { id: 45 }}">Select Location</router-link>
         </div>
         <div class="topbar-user">
           <a href="javascript:;" v-if="username">{{username}}</a>
@@ -97,7 +96,7 @@
         <div class="header-search">
           <div class="wrapper">
             <input type="text" class="searchInput" placeholder="米家插线板 快充版 27W" />
-            <div class="searchIcon">
+            <div class="searchIcon" @click="selfMsg">
               <span class="iconfont">&#xe632;</span>
             </div>
           </div>
@@ -153,6 +152,9 @@ export default {
     }
   },
   methods: {
+    selfMsg(){
+      this.$message.success('敬请期待')
+    },
     //测试用--点击添加localStorage
     localsto(){
       localStorage['city123'] = 'city456'
@@ -212,7 +214,8 @@ export default {
       background-color: #333333;
       color: #B0B0B0;
       .container{
-        @include flex();
+        display:flex;
+        justify-content:space-between;
         a {
           display: inline-block;
           color: #b0b0b0;
@@ -224,15 +227,10 @@ export default {
           height: 39px;
           background: #ff6600;
           text-align: center;
+          margin-right: 0;
+          color: $colorG;
         }
         height: 39px;
-        .topbar-user, .topbar-menu{
-          height: 39px;
-          .my-cart{
-            margin-right: 0;
-            color: $colorG;
-          }
-        }
       }
     }
     .nav-header{
@@ -246,7 +244,7 @@ export default {
           margin: 0 20px;
         }
         .header-menu{
-          display: inline-block;
+          // display: inline-block;
           width: 700px;
           // padding-left: 209px;
           .item-menu{
@@ -271,9 +269,7 @@ export default {
               border-top: 1px solid $colorH;
               box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
               z-index: 12;
-              //opcity是可以有过渡效果的，height不行
               &.fade-enter-active, &.fade-leave-active {
-                // transition: opacity .5s;
                 transition: all .6s;
               }
               &.fade-enter, &.fade-leave-to {
@@ -333,7 +329,7 @@ export default {
             .searchInput{
               width: 230px;
               height: 50px;
-              padding-left: 15px;
+              padding: 0 15px;
               border: none;
               border-right: 1px solid #E0E0E0;
             }
@@ -343,6 +339,7 @@ export default {
               height: 50px;
               text-align: center;
               line-height: 50px;
+              cursor: pointer;
               span{
                 font-size: 22px;
               }

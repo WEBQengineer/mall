@@ -20,26 +20,28 @@
               <p>订单详情<em class="icon-down" :class="{'up':showDetail}"  @click="showDetail=!showDetail"></em></p>
             </div>
           </div>
-          <div class="item-detail" v-if="showDetail">
-            <div class="item">
-              <div class="detail-title">订单号：</div>
-              <div class="detail-info theme-color">{{orderNo}}</div>
-            </div>
-            <div class="item good">
-              <div class="detail-title">商品名称：</div>
-              <div class="detail-info">
-                <ul>
-                  <li v-for="(item,index) in orderItemVoList" :key="index">
-                    <img v-lazy="item.productImage"/>{{item.productName}}
-                  </li>
-                </ul>
+          <transition name="fades">
+            <div class="item-detail" v-if="showDetail">
+              <div class="item">
+                <div class="detail-title">订单号：</div>
+                <div class="detail-info theme-color">{{orderNo}}</div>
+              </div>
+              <div class="item good">
+                <div class="detail-title">商品名称：</div>
+                <div class="detail-info">
+                  <ul>
+                    <li v-for="(item,index) in orderItemVoList" :key="index">
+                      <img v-lazy="item.productImage"/>{{item.productName}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="item">
+                <div class="detail-title">发票信息：</div>
+                <div class="detail-info">电子发票 个人</div>
               </div>
             </div>
-            <div class="item">
-              <div class="detail-title">发票信息：</div>
-              <div class="detail-info">电子发票 个人</div>
-            </div>
-          </div>
+          </transition>
         </div>
         <div class="item-pay">
           <h3>选择以下支付方式付款</h3>
@@ -114,10 +116,12 @@ export default{
     this.getOrderDetail();
   },
   methods:{
+    //删除监听弹窗的settimeout
     clearTimeoutOk(){
       clearTimeout(this.timer)
     },
     handleClose(){},
+    // 弹窗的确认按钮
     dialogOk(){
       this.closeDialog = 0
       // setTimeout(this.clearTimeoutOk,1000)
@@ -168,10 +172,10 @@ export default{
         padding: 62px 50px;
         background-color: #fff;
         font-size:14px;
-        margin-bottom:30px;
         .item-order{
           display: flex;
           align-items: center;
+          margin-bottom: 10px;
           .icon-succ{
             width: 90px;
             height: 90px;
@@ -218,11 +222,19 @@ export default{
           }
         }
         .item-detail{
-          border-top: 1px solid #D7D7D7;
-          padding-top: 47px;
+          // border-top: 1px solid #D7D7D7;
+          // padding-top: 47px;
+          // margin-top: 45px;
           padding-left: 130px;
           font-size: 14px;
-          margin-top: 45px;
+          height: 105px;
+          &.fades-enter-active, &.fades-leave-active {
+            transition: all .2s;
+          }
+          &.fades-enter, &.fades-leave-to {
+            opacity: 0;
+            height: 0px;
+          }
           .item{
             margin-bottom:19px;
             .detail-title{
@@ -236,6 +248,9 @@ export default{
                 vertical-align: middle;
               }
             }
+            &:last-child{
+              margin-bottom: 0;
+            }
           }
         }
       }
@@ -243,6 +258,7 @@ export default{
         padding:26px 50px 72px;
         background-color:#ffffff;
         color: #333333;
+        margin-top: 30px;
         h3{
           font-size: 20px;
           font-weight: 200;

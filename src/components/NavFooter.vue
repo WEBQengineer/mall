@@ -5,10 +5,10 @@
       <h3 class="logoName" href="">小米商城</h3>
     </div>
     <div class="copyright">
-      <a href="" target="_blank">河畔一角主页</a>
-      <a href="" target="_blank">Vue全栈课程</a>
-      <a href="" target="_blank">React全家桶课程</a>
-      <a href="" target="_blank">微信支付专项课程（H5+小程序+Node+Mongo）</a>
+      <a href="https://blog.csdn.net/weixin_38724114" target="_blank">陈志强的博客</a>
+      <a href="https://blog.csdn.net/weixin_38724114" target="_blank">小米商城</a>
+      <a href="https://blog.csdn.net/weixin_38724114" target="_blank">MIUI</a>
+      <a href="https://blog.csdn.net/weixin_38724114" target="_blank">游戏</a>
     </div>
   </div>
 </template>

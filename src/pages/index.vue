@@ -37,7 +37,7 @@
           </ul>
         </div>
         <Swiper :options="swiperOptions" ref="swi">
-          <swiper-slide class="swiper-item" v-for="item of slideList" :key="item.id">
+          <swiper-slide v-for="item of slideList" :key="item.id">
             <a :href="'/#/product/'+item.id">
               <img :src="item.img" />
             </a>
@@ -54,7 +54,7 @@
       </div>
       <div class="banner">
         <a href="/#/product/30">
-          <img v-lazy="'/imgs/banner-1.png'" alt="">
+          <img v-lazy="'/imgs/banner-2.png'" alt="">
         </a>
       </div>
     </div>
@@ -63,7 +63,8 @@
       <div class="wrapper container">
         <div class="banner-left">
           <a href="">
-            <img v-lazy="'/imgs/mix-alpha.jpg'" alt="">
+            <img v-lazy="'http://img.b2b2c.leimingtech.com/group1/M00/00/E2/wKgAD19xpPeAN9AfAAH0PwGFPKs500.jpg'" alt="">
+            <!-- <img v-lazy="'/imgs/column2.png'" alt=""> -->
           </a>
         </div>
         <div class="list-box">
@@ -77,9 +78,11 @@
                 {{item.price | stateLabel}}
               </span>
               <div class="item-img">
-                <a href="">
-                  <img v-lazy="item.mainImage" alt="">
-                </a>
+                <router-link :to="{ name: 'product', params: { id: 45 }}">
+                  <!-- <a href="http://101.200.196.40/#/product/45"> -->
+                    <img v-lazy="item.mainImage" alt="">
+                  <!-- </a> -->
+                </router-link>
               </div>
               <div class="item-info">
                 <h3>{{item.name}}</h3>
@@ -132,11 +135,11 @@ export default {
           clickable :true
         },
         loop : true,
+        // autoplay:true,
         autoplay: {
           delay: 1500,
           stopOnLastSlide: false,
           disableOnInteraction: false,
-          waitForTransition: false,
         },
         navigation: {
           nextEl: '.swiper-button-next',
@@ -145,20 +148,22 @@ export default {
         effect : 'fade',
         fadeEffect: {
           crossFade: true,
+          
         }
       },
       slideList:[
         {
           id:'42',
-          img:'/imgs/slider/slide-1.jpg'
-        },
-        {
-          id:'45',
-          img:'/imgs/slider/slide-2.jpg'
-        },
-        {
-          id:'46',
-          img:'/imgs/slider/slide-3.jpg'
+          img:'/imgs/slider/slide-6.png'
+        },{
+          id:'30',
+          img:'/imgs/slider/slide-5.png'
+        },{
+          id:'31',
+          img:'/imgs/slider/slide-7.png'
+        },{
+          id:'33',
+          img:'/imgs/slider/slide-4.png'
         }
       ],
       menuList:[
@@ -181,21 +186,21 @@ export default {
             name:'移动4G专区',
           }
         ],
-        [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
+        // [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
       ],
       adsList:[
         {
           id:33,
-          img:'/imgs/ads/ads-1.png'
+          img:'/imgs/ads/2.jpg'
         },{
           id:48,
-          img:'/imgs/ads/ads-2.jpg'
+          img:'/imgs/ads/1.jpg'
         },{
           id:45,
           img:'/imgs/ads/ads-3.png'
         },{
           id:47,
-          img:'/imgs/ads/ads-4.jpg'
+          img:'/imgs/ads/3.jpg'
         }
       ],
       phoneList:[],
@@ -268,6 +273,9 @@ export default {
   .container{
     margin: 0 auto;
     .swiper-box{
+      .swiper-container{
+        height: 451px;
+      }
       position: relative;  
       .navigation{
         // 这是一个透明色#66666600

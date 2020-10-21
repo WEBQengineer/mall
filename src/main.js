@@ -4,7 +4,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyload from 'vue-lazyload'
-import { Message } from 'element-ui'
+import { Message, Input } from 'element-ui'
 
 
 import store from './store'
@@ -44,13 +44,13 @@ axios.interceptors.response.use(function(response){
 });
 Vue.prototype.$message = Message;
 
-
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 Vue.use(VueLazyload,{
   loading:'/imgs/loading-svg/loading-bars.svg'
 })
 Vue.use(VueCookie)
+Vue.use(Input);
 
 new Vue({
   store,

@@ -7,7 +7,7 @@ module.exports = {
     proxy:{
       '/api':{
         target:'http://mall-pre.springboot.cn',
-        changeOrigin:true,
+        changeOrigin:true,//设置成true：发送请求头中host会设置成target
         pathRewrite:{
           '/api':''
         }

@@ -27,12 +27,12 @@
     </div>
     <div class="footer">
       <div class="footer-link">
-        <a href="https://www.imooc.com/u/1343480" target="_blank">河畔一角主页</a><span>|</span>
-        <a href="https://coding.imooc.com/class/113.html" target="_blank">Vue全栈课程</a><span>|</span>
-        <a href="https://coding.imooc.com/class/236.html" target="_blank">React全家桶课程</a><span>|</span>
-        <a href="https://coding.imooc.com/class/343.html" target="_blank">微信支付专项课程（H5+小程序/云+Node+MongoDB）</a>
+        <a href="https://blog.csdn.net/weixin_38724114" target="_blank">陈志强的博客</a><span>|</span>
+        <a href="https://blog.csdn.net/weixin_38724114" target="_blank">小米商城</a><span>|</span>
+        <a href="https://blog.csdn.net/weixin_38724114" target="_blank">MIUI</a><span>|</span>
+        <a href="https://blog.csdn.net/weixin_38724114" target="_blank">游戏</a>
       </div>
-      <p class="copyright">Copyright ©2019 mi.futurefe.com All Rights Reserved.</p>
+      <p class="copyright">Copyright ©2020 chenzhiqiang.com All Rights Reserved.</p>
     </div>
   </div>
 </template>

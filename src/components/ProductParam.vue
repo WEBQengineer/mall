@@ -5,9 +5,9 @@
         {{title}}
       </div>
       <div class="pro-param">
-        <a href="javascript:;">概述</a><span>|</span>
-        <a href="javascript:;">参数</a><span>|</span>
-        <a href="javascript:;">用户评价</a>
+        <a href="javascript:;" @click="selfMsg">概述</a><span>|</span>
+        <a href="javascript:;" @click="selfMsg">参数</a><span>|</span>
+        <a href="javascript:;" @click="selfMsg">用户评价</a>
         <slot name='buy'></slot>
       </div>
     </div>
@@ -25,6 +25,10 @@
      }
     },
     methods: {
+      //提示'敬请期待'
+      selfMsg(){
+        this.$message.success('敬请期待')
+      },
       printTop (){
         let topDis = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         this.isFixed = topDis>=152 ? true : false

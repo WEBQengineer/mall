@@ -229,18 +229,24 @@ export default{
       let { receiverName, receiverMobile, receiverProvince, receiverCity, receiverDistrict, receiverAddress, receiverZip } = checkedItem;
       if (!receiverName) {
         this.$message.warning('请输入用户名')
+        return
       } else if(!receiverMobile) {
         this.$message.warning('请输入手机号')
+        return
       } else if(!receiverProvince) {
         this.$message.warning('请输入省份')
+        return
       } else if(!receiverCity) {
         this.$message.warning('请输入市')
+        return
       } else if(!receiverDistrict) {
         this.$message.warning('请输入区')
+        return
       } else if(!receiverAddress) {
         this.$message.warning('请输入详细地址')
+        return
       } else if(!receiverZip) {
-        this.$message.warning('请输入邮编')
+        console.log('')
       }
       //用户行为 0:新增 1:编辑 2：删除
       if (userAction == 0) {

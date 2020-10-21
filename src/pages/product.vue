@@ -7,38 +7,40 @@
     </product-param>
     <div class="content">
       <div class="item-bg">
-        <h2>红米Note 7</h2>
-        <h3>红米Note 7 战斗天使</h3>
+        <h2>小米10</h2>
+        <h3>小米10至尊纪念版</h3>
         <p>
-          <a href="" id="">全球首款双频 GP</a>
+          <a href="" id="">120X 超远变焦</a>
           <span>|</span>
-          <a href="" id="">骁龙845</a>
+          <a href="" id="">骁龙865</a>
           <span>|</span>
-          <a href="" id="">AI 变焦双摄</a>
+          <a href="" id="">120Hz刷新率 + 240Hz采样率</a>
           <span>|</span>
-          <a href="" id="">红外人脸识别</a>
+          <a href="" id="">WiFi 6 多功能NFC </a>
         </p>
         <div class="price">
-          <span>￥<em>2599</em></span>
+          <span>￥<em>5599</em></span>
         </div>
       </div>
-      <div class="item-bg-2"></div>
-      <div class="item-bg-3"></div>
       <div class="item-swiper">
         <swiper :options="swiperOption">
-            <swiper-slide><img src="/imgs/product/gallery-2.png" alt=""></swiper-slide>
-            <swiper-slide><img src="/imgs/product/gallery-3.png" alt=""></swiper-slide>
-            <swiper-slide><img src="/imgs/product/gallery-4.png" alt=""></swiper-slide>
-            <swiper-slide><img src="/imgs/product/gallery-5.jpg" alt=""></swiper-slide>
-            <swiper-slide><img src="/imgs/product/gallery-6.jpg" alt=""></swiper-slide>
+            <swiper-slide><img src="/imgs/product/more_ai_4.png" alt=""></swiper-slide>
+            <swiper-slide><img src="/imgs/product/more_ai_3.png" alt=""></swiper-slide>
+            <swiper-slide><img src="/imgs/product/more_ai_2.png" alt=""></swiper-slide>
+            <swiper-slide><img src="/imgs/product/more_ai_1.png" alt=""></swiper-slide>
+            <swiper-slide><img src="/imgs/product/more_ai_5.png" alt=""></swiper-slide>
             <!-- Optional controls -->
             <div class="swiper-pagination"  slot="pagination"></div>
         </swiper>
-        <p class="desc">小米8 AI变焦双摄拍摄</p>
+        <p class="desc">小米10 AI变焦</p>
       </div>
       <div class="item-video">
-        <h2>60帧超慢动作摄影<br/>慢慢回味每一瞬间的精彩</h2>
-        <p>后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br/>更能AI 精准分析视频内容，15个场景智能匹配背景音效。</p>
+        <h2>你即将拿起的<br/>是我们最自豪的一部作品</h2>
+        <p>120X 超远变焦、120W 秒充科技、120Hz 专业屏幕。
+          以更未来、更智能的制造工艺，呈现中国科技的力量。
+          <br/>
+          现在，就让它与你一起，拾级而上，一往无前。
+        </p>
         <!-- <div class="video-bg" @click="openWin()"></div> -->
         
         <div class="video-bg" @click="throttle(650)"></div>
@@ -83,7 +85,7 @@
       }
     },
     mounted() {
-      this.getProductDetail()
+      this.getProductDetail();
     },
     methods: {
       getProductDetail(){
@@ -137,7 +139,8 @@
   .product{
     .content{
       .item-bg{
-        background:url('/imgs/product/product-bg-1.png') no-repeat center;
+        background:url('/imgs/product/product-bg-1.jpg') no-repeat center;
+        background-size: 1226px 718px;
         height:718px;
         text-align:center;
         h2{
@@ -167,16 +170,6 @@
             font-size:38px;
           }
         }
-      }
-      .item-bg-2{
-        background:url(/imgs/product/product-bg-2.png) no-repeat center;
-        height:480px;
-        background-size:1226px 397px;
-      }
-      .item-bg-3{
-        background:url(/imgs/product/product-bg-3.png) no-repeat center;
-        height:638px;
-        background-size:cover;
       }
       .item-swiper{
         margin:36px auto 52px;
