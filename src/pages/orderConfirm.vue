@@ -114,6 +114,7 @@
       @cancel="showDelModal = false"
       @submit="submitAddress"
     >
+    <!-- 用户行为 0:新增 1:编辑 2：删除 -->
       <template v-slot:body>
         是否删除该地址记录?
       </template>
@@ -123,37 +124,40 @@
       title='新增地址'
       btnType=1
       :showModal=showEditModal
-      @cancel="showEditModal = false"
+      @cancel="closeAddModal"
       @submit="submitAddress"
     >
       <template v-slot:body>
         <div class="edit-wrap">
           <div class="item">
-            <input type="text" placeholder="姓名" class="input" v-model="checkedItem.receiverName">
-            <input type="text" placeholder="手机号" class="input" v-model="checkedItem.receiverMobile">
+            <input type="text" placeholder="姓名" class="input" v-model="checkedAddItem.receiverName">
+            <input type="text" placeholder="手机号" class="input" v-model="checkedAddItem.receiverMobile">
           </div>
           <div class="item">
-            <select name="province"  v-model="checkedItem.receiverProvince">
-              <option value="北京">北京</option>
-              <option value="上海">上海</option>
-              <option value="浙江">浙江</option>
+            <select name="province" v-model="checkedAddItem.receiverProvince">
+              <option disabled value="">请选择省份</option>
+              <option>北京</option>
+              <option>上海</option>
+              <option>浙江</option>
             </select>
-            <select name="city" v-model="checkedItem.receiverCity">
+            <select name="city" v-model="checkedAddItem.receiverCity">
+              <option disabled value="">请选择市</option>
               <option value="北京">北京</option>
               <option value="上海">上海</option>
               <option value="杭州">杭州</option>
             </select>
-            <select name="district" v-model="checkedItem.receiverDistrict">
+            <select name="district" v-model="checkedAddItem.receiverDistrict">
+              <option disabled value="">请选择区</option>
               <option value="朝阳区">朝阳区</option>
               <option value="虹口区">虹口区</option>
               <option value="西湖区">西湖区</option>
             </select>
           </div>
           <div class="item">
-            <textarea name="street" v-model="checkedItem.receiverAddress"></textarea>
+            <textarea name="street" v-model="checkedAddItem.receiverAddress"></textarea>
           </div>
           <div class="item">
-            <input type="text" v-model="checkedItem.receiverZip" placeholder="邮编" class="input">
+            <input type="text" v-model="checkedAddItem.receiverZip" placeholder="邮编" class="input">
           </div>
         </div>
       </template>
@@ -173,9 +177,13 @@ export default{
       cartList:[], //购物车选中商品的列表
       cartTotalPrice:0, //选中商品总金额
       productCount:0, //购物车商品件数
-      checkedItem:{},
+      checkedAddItem:{  //选中的地址
+        receiverProvince: '',//下面这三项主要是为了设置默认值
+        receiverCity: '',
+        receiverDistrict: ''
+      },
       userAction:0,  //用户行为 0:新增 1:编辑 2：删除
-      nowChecked:0 //当前选择的收货地址
+      nowChecked:0, //当前选择的收货地址
     }
   },
   components:{
@@ -183,10 +191,15 @@ export default{
     Modal
   },
   mounted(){
-    this.getAddressList(),
-    this.getCartList()
+    this.getAddressList();
+    this.getCartList();
   },
   methods:{
+    //关闭弹窗按钮 且清空地址表单数据
+    closeAddModal(){
+      this.showEditModal = false
+      this.checkedAddItem = {}
+    },
     //获取地址列表
     getAddressList(){
       this.axios.get('/shippings').then((res)=>{
@@ -207,7 +220,7 @@ export default{
     },
     //删除收货地址
     delAddress(item){
-      this.checkedItem = item;
+      this.checkedAddItem = item;
       this.userAction = 2;
       this.showDelModal = true;
     },
@@ -220,47 +233,58 @@ export default{
     EditAddressModal(item){
       this.showEditModal = true;
       this.userAction = 1;
-      this.checkedItem = item;
+      this.checkedAddItem = item;
     },
-    //地址编辑、新增、删除公共封装
-    submitAddress(){
-      let { checkedItem, userAction } = this;
-      let method, url;
-      let { receiverName, receiverMobile, receiverProvince, receiverCity, receiverDistrict, receiverAddress, receiverZip } = checkedItem;
+    //校验新增/编辑信息
+    justifyAddInfo(){
+      let { receiverName, receiverMobile} = this.checkedAddItem;
       if (!receiverName) {
         this.$message.warning('请输入用户名')
-        return
-      } else if(!receiverMobile) {
-        this.$message.warning('请输入手机号')
-        return
-      } else if(!receiverProvince) {
-        this.$message.warning('请输入省份')
-        return
-      } else if(!receiverCity) {
-        this.$message.warning('请输入市')
-        return
-      } else if(!receiverDistrict) {
-        this.$message.warning('请输入区')
-        return
-      } else if(!receiverAddress) {
-        this.$message.warning('请输入详细地址')
-        return
-      } else if(!receiverZip) {
-        console.log('')
+        return false
       }
+      if(!receiverMobile) {
+        this.$message.warning('请输入手机号')
+        return false
+      }
+      let _this = this;
+      //依次是用户名、手机号、手机号正确格式、省、市、区、详细地址
+      this.formValidation.mobile(receiverMobile).then(()=>{
+        return this.formValidation.province(this.checkedAddItem)
+      }).then(()=>{
+        return this.formValidation.city(this.checkedAddItem)
+      }).then(()=>{
+        return this.formValidation.district(this.checkedAddItem)
+      }).then(()=>{
+        return this.formValidation.address(this.checkedAddItem)
+      }).then(()=>this.addrPublicMethod())
+      .catch(function(value){
+        _this.$message.warning(value)
+      })
+    },
+    //地址编辑、新增、删除公共封装
+    addrPublicMethod(){
+      let { checkedAddItem, userAction } = this;
+      let method, url;
       //用户行为 0:新增 1:编辑 2：删除
       if (userAction == 0) {
         method = 'post';
-        url = `/shippings`
+        url = `/shippings`;
+        this.addrSave(checkedAddItem, method, url)
       } else if (userAction == 1) {
         method = 'put';
-        url = `/shippings/${checkedItem.id}`
+        url = `/shippings/${checkedAddItem.id}`;
+        this.addrSave(checkedAddItem, method, url)
       } else if (userAction == 2)  {
         method = 'delete';
-        url = `/shippings/${checkedItem.id}`
+        url = `/shippings/${checkedAddItem.id}`;
+        this.addrSave(checkedAddItem, method, url)
       }
+    },
+    //发送删除地址的ajax请求
+    addrSave(checkedAddItem, method, url){
+      let { userAction } = this;
       // 新增收货地址时的参数
-      let params = checkedItem;
+      let params = checkedAddItem;
       this.axios[method](url,params).then(()=>{
         this.$message.success('操作成功')
         //判断如果最后一个被删掉了，默认第一个为选中状态
@@ -271,13 +295,24 @@ export default{
         this.closeModal()
       })
     },
+    
+    //弹窗确认按钮
+    submitAddress(){
+      let { userAction } = this;
+      //增加/编辑走校验，其他的直接走删除
+      if ( userAction != 2) {
+        this.justifyAddInfo();
+      } else{
+        this.addrPublicMethod();
+      }
+      
+    },
     closeModal(){
-      this.checkedItem = {};
+      this.checkedAddItem = {};
       this.userAction = '';
       this.showDelModal = false;
       this.showEditModal = false;
     },
-    
     // 订单提交
     orderSubmit(){
       this.axios.post('/orders',{
@@ -323,7 +358,7 @@ export default{
               width:271px;
               height:180px;
               border:1px solid #E5E5E5;
-              margin-right: 15px;
+              margin: 15px 15px 0 0;
               padding: 15px 24px;
               font-size: 14px;
               color:#757575;
@@ -461,6 +496,9 @@ export default{
           border: 1px solid #e5e5e5;
           &+ input{
             margin-left:14px;
+          }
+          &.borderColor{
+            border: 1px solid red;
           }
         }
         textarea{

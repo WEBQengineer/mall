@@ -192,7 +192,7 @@ export default {
     logout(){
       this.axios.post('/user/logout').then(()=>{
         this.$message.success('退出成功');
-        this.$cookie.set('userId','',{expires:'-1'});
+        this.$cookie.set('userId','',{expires:'-1'});//设为-1代表永不过期
         this.saveUserName('');
         this.saveCartCount('0')
       })

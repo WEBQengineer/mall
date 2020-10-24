@@ -14,7 +14,8 @@ import 'styles/iconfont.css'
 import 'swiper/css/swiper.css'
 import 'element-ui/lib/theme-chalk/index.css';
 import env from './env'
-
+import formValidation from "./util/formValidation"  //导入js所在文件夹
+Vue.prototype.formValidation=formValidation; 
 
 // axios.defaults.baseURL = env.baseURL;
 axios.defaults.baseURL = 'api';
