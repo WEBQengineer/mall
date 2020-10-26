@@ -108,6 +108,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { _throttle } from '../util/debounce-throttle'
+// import { _de } from '../util/test'
 export default {
   name: 'nav-header',
   data () {
@@ -136,6 +138,7 @@ export default {
   //因为使用了keep-alive 所以mounted失效，只能用mounted
   //另一种解决方案<keep-alive exclude="Detail">
   activated(){
+    console.log('this123',this)//打印的是VueComponent
     console.log('this.$route',this.$route.name)
     this.getProductList();
     let params = this.$route.params;
@@ -152,9 +155,19 @@ export default {
     }
   },
   methods: {
-    selfMsg(){
-      this.$message.success('敬请期待')
-    },
+    selfMsg: _throttle(function() {
+      this.$message.success('敬请期待');
+      return '测试返回值'
+    },2000,{trailing: false,immediate: true}),
+    
+    // selfMsg(){
+    //   this.selfMsg1().then((f)=>console.log(f))
+    // },
+    //“敬请期待提示”-加了防抖
+    // selfMsg1: _debounce(function() {
+    //   this.$message.success('敬请期待');
+    //   return '测试返回值'
+    // }, 1000,true),
     //测试用--点击添加localStorage
     localsto(){
       localStorage['city123'] = 'city456'

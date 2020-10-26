@@ -68,8 +68,15 @@
         loadingImg:true, //加载中状态提示
         pageSize:10,
         pageNum:1,
-        total:0
+        total:0,
+        ddt:12
       }
+    },
+    beforeUpdate(){
+      console.log('beforeUpdate123')
+    },
+    updated(){
+      console.log('updated123')
     },
     components:{
       OrderHeader,

@@ -9,6 +9,7 @@
           <h3>
             <span class="checked">帐号登录</span><span class="sep-line">|</span><span>扫码登录</span>
           </h3>
+          <div class="infoOne">账号为：<span>czq006</span> 密码为：<span>czq006</span></div>
           <div class="input">
             <input type="text" placeholder="请输入帐号" v-model="username">
           </div>
@@ -106,11 +107,17 @@ export default {
         position:absolute;
         bottom:29px;
         right:0;
+        .infoOne{
+          margin: 5px 0;
+          span{
+            color: red;
+          }
+        }
         h3{
           line-height:23px;
           font-size:24px;
           text-align:center;
-          margin:40px auto 49px;
+          margin:40px auto 19px;
           .checked{
             color:#FF6600;
           }
@@ -123,6 +130,7 @@ export default {
           width:348px;
           height:50px;
           border:1px solid #E5E5E5;
+          // margin-top: 10px;
           margin-bottom:20px;
           input{
             width: 100%;
